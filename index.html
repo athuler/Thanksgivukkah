@@ -29,7 +29,17 @@
   .count small { text-transform: uppercase; font-size: .7rem; letter-spacing: .1em; }
   #s.tick { animation: tick .3s ease-out; }
   p { margin: .4rem 0; font-size: 1.05rem; }
-  .muted { opacity: .75; font-size: .9rem; margin-top: 1.5rem; }
+  button { font: inherit; color: inherit; background: var(--card); border: 0; border-radius: 999px; padding: .5rem 1.1rem; margin-top: 1.2rem; cursor: pointer; box-shadow: 0 3px 0 rgba(0,0,0,.15); }
+  dialog { width: min(30rem, 100%); max-height: min(36rem, 85vh); padding: 0; border: 0; border-radius: 22px; background: var(--card); color: var(--ink); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+  dialog::backdrop { background: rgba(0,0,0,.45); backdrop-filter: blur(3px); }
+  dialog header { display: flex; justify-content: space-between; align-items: center; padding: .8rem 1.1rem; font-weight: 700; }
+  dialog header button { margin: 0; padding: .2rem .7rem; }
+  #list { height: min(30rem, 72vh); overflow-y: auto; overscroll-behavior: contain; padding: 0 1rem; }
+  .row { padding: 1rem 0; opacity: .6; border-top: 1px solid rgba(128,128,128,.2); }
+  .row.next { opacity: 1; color: var(--accent); }
+  .row h2 { margin: 0; font-size: 1.15rem; }
+  .row p { font-size: .9rem; margin: .2rem 0 0; }
+  .end { padding: 1rem 0; opacity: .6; font-size: .85rem; }
   @keyframes bob { 50% { transform: translateY(-8px) rotate(-6deg); } }
   @keyframes flicker { from { filter: drop-shadow(0 0 2px gold); } to { filter: drop-shadow(0 0 14px orange); transform: scale(1.05); } }
   @keyframes tick { from { transform: scale(1.25); } }
@@ -47,13 +57,85 @@
     <div><b id="m">–</b><small>min</small></div>
     <div><b id="s">–</b><small>sec</small></div>
   </div>
-  <p><strong>Next:</strong> Thursday, November 27, 2070</p>
-  <p><strong>Last:</strong> Thursday, November 28, 2013</p>
+  <p><strong>Next:</strong> <span id="next"></span></p>
+  <p><strong>Last:</strong> <span id="last"></span></p>
+  <button id="open">Every Thanksgivukkah ↕</button>
 </main>
+<dialog id="all" aria-label="Every Thanksgivukkah">
+  <header>Every Thanksgivukkah <span><button id="today" hidden>↩ Today</button> <button id="close" aria-label="Close">✕</button></span></header>
+  <div id="list"></div>
+</dialog>
 <script>
-  // shortcut: sundown fixed at 4:30pm US Eastern, not the viewer's local sunset; fine for a fun countdown.
-  const NEXT = new Date("2070-11-27T16:30:00-05:00");
   const $ = id => document.getElementById(id);
+  const DAY = 864e5, MIN = 1, MAX = 275759; // MAX: last full year a JS Date can hold
+  const heb = new Intl.DateTimeFormat("en-u-ca-hebrew", { day: "numeric", month: "long", timeZone: "UTC" });
+  const is25Kislev = d => { const p = Object.fromEntries(heb.formatToParts(d).map(x => [x.type, x.value])); return p.month === "Kislev" && p.day === "25"; };
+  // setUTCFullYear because Date.UTC maps years 0-99 to 1900-1999
+  const utc = (y, m, d, h = 0, mi = 0) => { const t = new Date(Date.UTC(2000, m, d, h, mi)); t.setUTCFullYear(y); return t; };
+
+  // Thanksgivukkah = Hanukkah's first full day (25 Kislev) is Thanksgiving, or the day after (first candle on Thanksgiving night).
+  // shortcut: applies today's 4th-Thursday rule to every year, even before Thanksgiving existed (1863).
+  function thanksgivukkah(y) {
+    const date = 22 + (11 - utc(y, 10, 1).getUTCDay()) % 7;
+    const tg = utc(y, 10, date), eve = is25Kislev(utc(y, 10, date + 1));
+    if (!eve && !is25Kislev(tg)) return null;
+    // shortcut: first candle at 4:30pm US Eastern (21:30 UTC), not the viewer's local sunset.
+    return { y, tg, start: utc(y, 10, eve ? date : date - 1, 21, 30) };
+  }
+  // shortcut: searching past 2165 scans ~76,000 empty years (~0.7s) in one go.
+  function find(y, step) {
+    for (; y >= MIN && y <= MAX; y += step) { const t = thanksgivukkah(y); if (t) return t; }
+    return null;
+  }
+  console.assert(thanksgivukkah(2013) && thanksgivukkah(2070) && thanksgivukkah(2165) && !thanksgivukkah(2014), "Thanksgivukkah date math changed");
+
+  const now = new Date(), yNow = now.getUTCFullYear();
+  let next = find(yNow, 1);
+  if (+next.start + 8 * DAY <= now) next = find(next.y + 1, 1); // this year's already over
+  const last = find(next.y - 1, -1);
+  const fmt = d => d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
+  $("next").textContent = fmt(next.tg);
+  $("last").textContent = fmt(last.tg);
+  const NEXT = next.start;
+
+  // Modal: starts on the next one, loads more as you scroll either way.
+  const list = $("list");
+  let lo = next.y, hi = next.y;
+  function row(t) {
+    const el = document.createElement("section"), d = t.y - yNow;
+    el.className = "row" + (t === next ? " next" : "");
+    const rel = t === next ? "Next one!" : d < 0 ? `${(-d).toLocaleString()} years ago` : d === 0 ? "This year" : `in ${d.toLocaleString()} years`;
+    el.innerHTML = `<h2>${fmt(t.tg)}</h2><p>${rel}</p>`;
+    return el;
+  }
+  const nextRow = list.appendChild(row(next));
+  function end(text) { const el = document.createElement("div"); el.className = "end"; el.textContent = text; return el; }
+  function more(dir) {
+    for (let i = 0; i < 10; i++) {
+      if (dir < 0 ? lo <= MIN : hi >= MAX) return;
+      const t = find(dir < 0 ? lo - 1 : hi + 1, dir);
+      if (dir < 0) {
+        const h = list.scrollHeight;
+        if (t) { lo = t.y; list.prepend(row(t)); } else { lo = MIN; list.prepend(end("Year 1. That's as far back as we go.")); }
+        list.scrollTop += list.scrollHeight - h; // keep the view still while adding above
+      } else if (t) { hi = t.y; list.append(row(t)); }
+      else { hi = MAX; list.append(end("That's as far as JavaScript dates go. 🙃")); }
+      if (!t) return;
+    }
+  }
+  list.addEventListener("scroll", () => {
+    if (list.scrollTop < 300) more(-1);
+    if (list.scrollHeight - list.scrollTop - list.clientHeight < 300) more(1);
+  });
+  $("open").onclick = () => {
+    if (lo === hi) { more(-1); more(1); } // filled on first open: the scan past 2165 is slow
+    $("all").showModal(); nextRow.scrollIntoView({ block: "center" }); };
+  // "Today" shows only while the next one is scrolled out of view
+  new IntersectionObserver(([e]) => { $("today").hidden = e.isIntersecting; }, { root: list }).observe(nextRow);
+  $("today").onclick = () => nextRow.scrollIntoView({ block: "center", behavior: "smooth" });
+  $("close").onclick = () => $("all").close();
+  $("all").onclick = e => { if (e.target === $("all")) $("all").close(); }; // click on backdrop closes
+
   function tick() {
     const now = new Date();
     if (now >= NEXT) { document.querySelector(".count").textContent = "🎉 It's Thanksgivukkah! 🎉"; return; }
