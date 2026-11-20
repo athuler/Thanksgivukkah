@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thanksgivukkah Countdown</title>
+<meta name="description" content="Countdown to the next time Thanksgiving and Hanukkah collide.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦃</text></svg>">
+<!-- GA -->
+<style>
+  :root { --bg1:#f7d9a8; --bg2:#e8a25c; --ink:#3b1f0e; --accent:#1f4fa8; --card:#fff8ee; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg1:#2a1a10; --bg2:#14223f; --ink:#fbeedd; --accent:#8fb4ff; --card:#1d1410; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px;
+    background: linear-gradient(160deg, var(--bg1), var(--bg2));
+    color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center;
+  }
+  main { max-width: 40rem; width: 100%; }
+  h1 { font-size: clamp(2.2rem, 9vw, 4.5rem); margin: 0 0 .25em; letter-spacing: -.02em; }
+  .emoji { font-size: clamp(2.5rem, 12vw, 4.5rem); }
+  .emoji span { display: inline-block; animation: bob 2.4s ease-in-out infinite; }
+  .emoji span:last-child { animation: flicker 1.3s ease-in-out infinite alternate; }
+  .count { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin: 1.5rem 0; }
+  .count div { background: var(--card); border-radius: 14px; padding: .7rem .9rem; min-width: 5.2rem; box-shadow: 0 4px 0 rgba(0,0,0,.15); }
+  .count b { display: block; font-size: clamp(1.6rem, 7vw, 2.4rem); font-variant-numeric: tabular-nums; color: var(--accent); }
+  .count small { text-transform: uppercase; font-size: .7rem; letter-spacing: .1em; }
+  #s.tick { animation: tick .3s ease-out; }
+  p { margin: .4rem 0; font-size: 1.05rem; }
+  .muted { opacity: .75; font-size: .9rem; margin-top: 1.5rem; }
+  @keyframes bob { 50% { transform: translateY(-8px) rotate(-6deg); } }
+  @keyframes flicker { from { filter: drop-shadow(0 0 2px gold); } to { filter: drop-shadow(0 0 14px orange); transform: scale(1.05); } }
+  @keyframes tick { from { transform: scale(1.25); } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="emoji" aria-hidden="true"><span>🦃</span> <span>🕎</span></div>
+  <h1>Thanksgivukkah</h1>
+  <div class="count" role="timer" aria-live="off">
+    <div><b id="y">–</b><small>years</small></div>
+    <div><b id="d">–</b><small>days</small></div>
+    <div><b id="h">–</b><small>hours</small></div>
+    <div><b id="m">–</b><small>min</small></div>
+    <div><b id="s">–</b><small>sec</small></div>
+  </div>
+  <p><strong>Next:</strong> Thursday, November 27, 2070</p>
+  <p><strong>Last:</strong> Thursday, November 28, 2013</p>
+</main>
+<script>
+  // shortcut: sundown fixed at 4:30pm US Eastern, not the viewer's local sunset; fine for a fun countdown.
+  const NEXT = new Date("2070-11-27T16:30:00-05:00");
+  const $ = id => document.getElementById(id);
+  function tick() {
+    const now = new Date();
+    if (now >= NEXT) { document.querySelector(".count").textContent = "🎉 It's Thanksgivukkah! 🎉"; return; }
+    // whole calendar years first, then the remainder in days/h/m/s
+    let y = NEXT.getFullYear() - now.getFullYear();
+    const shifted = new Date(now); shifted.setFullYear(now.getFullYear() + y);
+    if (shifted > NEXT) { y--; shifted.setFullYear(now.getFullYear() + y); }
+    let r = Math.floor((NEXT - shifted) / 1000);
+    const d = Math.floor(r / 86400); r %= 86400;
+    $("y").textContent = y; $("d").textContent = d;
+    $("h").textContent = Math.floor(r / 3600); $("m").textContent = Math.floor(r % 3600 / 60);
+    const s = $("s"); s.textContent = r % 60; s.classList.remove("tick"); void s.offsetWidth; s.classList.add("tick");
+  }
+  tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
