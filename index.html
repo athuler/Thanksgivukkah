@@ -3,8 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thanksgivukkah Countdown</title>
-<meta name="description" content="Countdown to the next time Thanksgiving and Hanukkah collide.">
+<title>Thanksgivukkah Countdown: When Is the Next Thanksgivukkah?</title>
+<meta name="description" content="Live countdown to the next Thanksgivukkah on November 27, 2070, when Thanksgiving and the first night of Hanukkah collide. Browse every past and future Thanksgivukkah and read the FAQ.">
+<meta name="author" content="Andrei Thüler">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#e8a25c">
+<link rel="canonical" href="https://thanksgivukkah.andreithuler.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thanksgivukkah Countdown">
+<meta property="og:url" content="https://thanksgivukkah.andreithuler.com/">
+<meta property="og:title" content="Thanksgivukkah Countdown: When Is the Next Thanksgivukkah?">
+<meta property="og:description" content="The next Thanksgivukkah is November 27, 2070. Count down to the next time Thanksgiving and Hanukkah collide.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Thanksgivukkah Countdown">
+<meta name="twitter:description" content="The next Thanksgivukkah is November 27, 2070. Count down to the next time Thanksgiving and Hanukkah collide.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Thanksgivukkah Countdown","url":"https://thanksgivukkah.andreithuler.com/",
+ "description":"Countdown to the next Thanksgivukkah, when Thanksgiving and Hanukkah collide.",
+ "author":{"@type":"Person","name":"Andrei Thüler","url":"https://andreithuler.com"}}
+</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦃</text></svg>">
 <!-- GA -->
 <style>
@@ -40,6 +57,13 @@
   .row h2 { margin: 0; font-size: 1.15rem; }
   .row p { font-size: .9rem; margin: .2rem 0 0; }
   .end { padding: 1rem 0; opacity: .6; font-size: .85rem; }
+  .faq { max-height: min(30rem, 72vh); overflow-y: auto; overscroll-behavior: contain; padding: 0 1.2rem 1rem; text-align: left; }
+  .faq h2 { font-size: 1rem; margin: 1.1rem 0 .3rem; }
+  .faq p { font-size: .95rem; line-height: 1.45; }
+  .faq .src { font-size: .8rem; opacity: .7; }
+  .faq a { color: inherit; }
+  footer { margin-top: 2.5rem; font-size: .85rem; opacity: .8; }
+  footer a { color: inherit; }
   @keyframes bob { 50% { transform: translateY(-8px) rotate(-6deg); } }
   @keyframes flicker { from { filter: drop-shadow(0 0 2px gold); } to { filter: drop-shadow(0 0 14px orange); transform: scale(1.05); } }
   @keyframes tick { from { transform: scale(1.25); } }
@@ -57,41 +81,93 @@
     <div><b id="m">–</b><small>min</small></div>
     <div><b id="s">–</b><small>sec</small></div>
   </div>
-  <p><strong>Next:</strong> <span id="next"></span></p>
-  <p><strong>Last:</strong> <span id="last"></span></p>
+  <p><strong>Next:</strong> <span id="next">Thursday, November 27, 2070</span></p>
+  <p><strong>Last:</strong> <span id="last">Thursday, November 28, 2013</span></p>
   <button id="open">Every Thanksgivukkah ↕</button>
+  <footer>
+    Made by <a href="https://andreithuler.com" target="_blank" rel="noopener">Andrei Thüler</a> ·
+    <a href="https://ko-fi.com/andreithuler" target="_blank" rel="noopener">☕ Buy me a coffee</a> ·
+    <a href="#faq" id="faq-open">FAQ</a>
+  </footer>
 </main>
 <dialog id="all" aria-label="Every Thanksgivukkah">
-  <header>Every Thanksgivukkah <span><button id="today" hidden>↩ Today</button> <button id="close" aria-label="Close">✕</button></span></header>
+  <header>Every Thanksgivukkah <span><button id="today" hidden>↩ Today</button> <button class="close" aria-label="Close">✕</button></span></header>
   <div id="list"></div>
+</dialog>
+<dialog id="faq" aria-label="Thanksgivukkah FAQ">
+  <header>Thanksgivukkah FAQ <button class="close" aria-label="Close">✕</button></header>
+  <div class="faq">
+    <h2>What is Thanksgivukkah?</h2>
+    <p>Thanksgivukkah is the rare day when American Thanksgiving falls during Hanukkah, the eight-night Jewish Festival of Lights. The name blends "Thanksgiving" and "Hanukkah" and became popular across the U.S. in 2013.</p>
+    <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Thanksgivukkah" target="_blank" rel="noopener">Wikipedia, Thanksgivukkah</a></p>
+    <h2>When is the next Thanksgivukkah?</h2>
+    <p>The next Thanksgivukkah is Thursday, November 27, 2070. The first candle of Hanukkah is lit on the evening of Thanksgiving Day.</p>
+    <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Thanksgivukkah" target="_blank" rel="noopener">Wikipedia, Thanksgivukkah</a></p>
+    <h2>When was the last Thanksgivukkah?</h2>
+    <p>The last Thanksgivukkah was Thursday, November 28, 2013, the first full day of Hanukkah. The first Hanukkah candle was lit the night before.</p>
+    <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Thanksgivukkah" target="_blank" rel="noopener">Wikipedia, Thanksgivukkah</a></p>
+    <h2>When will Thanksgivukkah happen after 2070?</h2>
+    <p>After 2070 the next one is Thursday, November 28, 2165, again on the evening of Thanksgiving. After that the calendars drift apart: by this site's calculation, Thanksgiving next falls during Hanukkah in the year 76942. A widely cited estimate puts the next time the first day of Hanukkah lands on Thanksgiving in the year 79811.</p>
+    <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Thanksgivukkah" target="_blank" rel="noopener">Wikipedia, Thanksgivukkah</a></p>
+    <h2>Has Thanksgivukkah happened before 2013?</h2>
+    <p>Yes. Since the first national Thanksgiving in 1863, Thanksgiving also fell during Hanukkah in 1888 (the first day of Hanukkah), 1899 (the fourth day) and 1918.</p>
+    <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Thanksgivukkah" target="_blank" rel="noopener">Wikipedia, Thanksgivukkah</a></p>
+    <h2>How often does Thanksgivukkah happen?</h2>
+    <p>Very rarely: six times between 1863 and 2165, and then not for tens of thousands of years. Most people will see it at most once in their lifetime.</p>
+    <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Thanksgivukkah" target="_blank" rel="noopener">Wikipedia, Thanksgivukkah</a></p>
+    <h2>Why is Thanksgivukkah so rare?</h2>
+    <p>Thanksgiving follows the Gregorian calendar and always falls between November 22 and 28. Hanukkah starts on 25 Kislev in the lunisolar Hebrew calendar, so its Gregorian date moves from year to year, anywhere from late November to early January. The two calendars have slightly different average year lengths, so the Hebrew calendar drifts about one day every 216 years, slowly moving Hanukkah away from late November.</p>
+    <p class="src">Sources: <a href="https://en.wikipedia.org/wiki/Thanksgivukkah" target="_blank" rel="noopener">Wikipedia, Thanksgivukkah</a>; <a href="https://en.wikipedia.org/wiki/Hebrew_calendar" target="_blank" rel="noopener">Wikipedia, Hebrew calendar</a></p>
+    <h2>When is Thanksgiving?</h2>
+    <p>In the United States, Thanksgiving is the fourth Thursday of November. From Lincoln's 1863 proclamation it was held on the last Thursday of November. In 1939 President Roosevelt moved it to the second-to-last Thursday, and on December 26, 1941 Congress fixed it as the fourth Thursday.</p>
+    <p class="src">Source: <a href="https://www.archives.gov/legislative/features/thanksgiving" target="_blank" rel="noopener">U.S. National Archives, Congress Establishes Thanksgiving</a></p>
+    <h2>When does Hanukkah start?</h2>
+    <p>Hanukkah begins on 25 Kislev in the Hebrew calendar and lasts eight nights and days. Hebrew calendar days begin at sunset, so the first candle of the menorah is lit on the evening before.</p>
+    <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Hanukkah" target="_blank" rel="noopener">Wikipedia, Hanukkah</a></p>
+    <h2>What does the countdown count down to?</h2>
+    <p>It counts down to the moment Thanksgiving and Hanukkah overlap. In 2070 that is the first candle lighting on Thanksgiving evening, set at 4:30 pm US Eastern time, around sundown.</p>
+    <h2>How are the dates calculated?</h2>
+    <p>The page converts each year's Thanksgiving to the Hebrew calendar right in your browser and checks whether it falls within the eight days of Hanukkah, using the historical Thanksgiving rules for each year.</p>
+    <p class="src">Sources: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat" target="_blank" rel="noopener">MDN, Intl.DateTimeFormat</a> (the browser's Hebrew calendar); <a href="https://www.archives.gov/legislative/features/thanksgiving" target="_blank" rel="noopener">U.S. National Archives</a> (Thanksgiving rules)</p>
+    <h2>How do people celebrate Thanksgivukkah?</h2>
+    <p>With mash-ups of both holidays, like latkes with cranberry applesauce, sweet potato latkes and turkey-shaped menorahs.</p>
+    <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Thanksgivukkah" target="_blank" rel="noopener">Wikipedia, Thanksgivukkah</a></p>
+  </div>
 </dialog>
 <script>
   const $ = id => document.getElementById(id);
-  const DAY = 864e5, MIN = 1, MAX = 275759; // MAX: last full year a JS Date can hold
+  const MIN = 1863, MAX = 275759; // MIN: first national Thanksgiving; MAX: last full year a JS Date can hold
   const heb = new Intl.DateTimeFormat("en-u-ca-hebrew", { day: "numeric", month: "long", timeZone: "UTC" });
-  const is25Kislev = d => { const p = Object.fromEntries(heb.formatToParts(d).map(x => [x.type, x.value])); return p.month === "Kislev" && p.day === "25"; };
+  const hebrew = d => Object.fromEntries(heb.formatToParts(d).map(x => [x.type, x.value]));
   // setUTCFullYear because Date.UTC maps years 0-99 to 1900-1999
   const utc = (y, m, d, h = 0, mi = 0) => { const t = new Date(Date.UTC(2000, m, d, h, mi)); t.setUTCFullYear(y); return t; };
 
-  // Thanksgivukkah = Hanukkah's first full day (25 Kislev) is Thanksgiving, or the day after (first candle on Thanksgiving night).
-  // shortcut: applies today's 4th-Thursday rule to every year, even before Thanksgiving existed (1863).
-  function thanksgivukkah(y) {
-    const date = 22 + (11 - utc(y, 10, 1).getUTCDay()) % 7;
-    const tg = utc(y, 10, date), eve = is25Kislev(utc(y, 10, date + 1));
-    if (!eve && !is25Kislev(tg)) return null;
-    // shortcut: first candle at 4:30pm US Eastern (21:30 UTC), not the viewer's local sunset.
-    return { y, tg, start: utc(y, 10, eve ? date : date - 1, 21, 30) };
+  // Thanksgiving: last Thursday of November until 1938, second-to-last 1939-41 ("Franksgiving"), 4th Thursday since 1942.
+  function thanksgivingDate(y) {
+    const fourth = 22 + (11 - utc(y, 10, 1).getUTCDay()) % 7, lastThu = fourth + 7 <= 30 ? fourth + 7 : fourth;
+    return y >= 1942 ? fourth : y >= 1939 ? lastThu - 7 : lastThu;
   }
-  // shortcut: searching past 2165 scans ~76,000 empty years (~0.7s) in one go.
+  // Thanksgivukkah = Thanksgiving falls during Hanukkah: from the first candle (evening of 24 Kislev) to the 8th day (2 or 3 Tevet).
+  function thanksgivukkah(y) {
+    const date = thanksgivingDate(y), tg = utc(y, 10, date), p = hebrew(tg), d = +p.day;
+    const hit = p.month === "Kislev" ? d >= 24
+      : p.month === "Tevet" && (d <= 2 || d === 3 && hebrew(utc(y, 10, date - 3)).day === "29"); // 3 Tevet is day 8 only after a 29-day Kislev
+    if (!hit) return null;
+    // Starts when both are on: first candle that evening (24 Kislev), else Thanksgiving's start. Ends when Thanksgiving ends.
+    // shortcut: times are US Eastern (UTC-5) with first candle at 4:30pm, not the viewer's local sunset.
+    const start = p.month === "Kislev" && d === 24 ? utc(y, 10, date, 21, 30) : utc(y, 10, date, 5);
+    return { y, tg, start, end: utc(y, 10, date + 1, 5) };
+  }
+  // shortcut: searching past 2165 scans ~75,000 empty years (~0.35s) in one go.
   function find(y, step) {
     for (; y >= MIN && y <= MAX; y += step) { const t = thanksgivukkah(y); if (t) return t; }
     return null;
   }
-  console.assert(thanksgivukkah(2013) && thanksgivukkah(2070) && thanksgivukkah(2165) && !thanksgivukkah(2014), "Thanksgivukkah date math changed");
+  console.assert([1888, 1899, 1918, 2013, 2070, 2165].every(thanksgivukkah) && !thanksgivukkah(2014), "Thanksgivukkah date math changed");
 
-  const now = new Date(), yNow = now.getUTCFullYear();
+  const now = new Date(), yNow = now.getFullYear();
   let next = find(yNow, 1);
-  if (+next.start + 8 * DAY <= now) next = find(next.y + 1, 1); // this year's already over
+  if (next.end <= now) next = find(next.y + 1, 1); // this year's already over
   const last = find(next.y - 1, -1);
   const fmt = d => d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
   $("next").textContent = fmt(next.tg);
@@ -116,7 +192,7 @@
       const t = find(dir < 0 ? lo - 1 : hi + 1, dir);
       if (dir < 0) {
         const h = list.scrollHeight;
-        if (t) { lo = t.y; list.prepend(row(t)); } else { lo = MIN; list.prepend(end("Year 1. That's as far back as we go.")); }
+        if (t) { lo = t.y; list.prepend(row(t)); } else { lo = MIN; list.prepend(end("1863: the first national Thanksgiving. That's as far back as we go.")); }
         list.scrollTop += list.scrollHeight - h; // keep the view still while adding above
       } else if (t) { hi = t.y; list.append(row(t)); }
       else { hi = MAX; list.append(end("That's as far as JavaScript dates go. 🙃")); }
@@ -128,21 +204,35 @@
     if (list.scrollHeight - list.scrollTop - list.clientHeight < 300) more(1);
   });
   $("open").onclick = () => {
-    if (lo === hi) { more(-1); more(1); } // filled on first open: the scan past 2165 is slow
-    $("all").showModal(); nextRow.scrollIntoView({ block: "center" }); };
+    $("all").showModal(); nextRow.scrollIntoView({ block: "center" });
+    // filled on first open, after the dialog paints: the scan past 2165 is slow
+    if (lo === hi) setTimeout(() => { more(-1); more(1); nextRow.scrollIntoView({ block: "center" }); }, 50);
+  };
   // "Today" shows only while the next one is scrolled out of view
   new IntersectionObserver(([e]) => { $("today").hidden = e.isIntersecting; }, { root: list }).observe(nextRow);
   $("today").onclick = () => nextRow.scrollIntoView({ block: "center", behavior: "smooth" });
-  $("close").onclick = () => $("all").close();
-  $("all").onclick = e => { if (e.target === $("all")) $("all").close(); }; // click on backdrop closes
+  for (const dlg of document.querySelectorAll("dialog")) {
+    dlg.querySelector(".close").onclick = () => dlg.close();
+    dlg.onclick = e => { if (e.target === dlg) dlg.close(); }; // click on backdrop closes
+  }
+  $("faq-open").onclick = e => { e.preventDefault(); $("faq").showModal(); };
+  if (location.hash === "#faq") $("faq").showModal();
+  // FAQPage structured data built from the FAQ above, so the two never drift apart
+  const ld = document.createElement("script");
+  ld.type = "application/ld+json";
+  ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage",
+    mainEntity: [...document.querySelectorAll(".faq h2")].map(h => ({ "@type": "Question", name: h.textContent,
+      acceptedAnswer: { "@type": "Answer", text: h.nextElementSibling.textContent } })) });
+  document.head.append(ld);
 
   function tick() {
     const now = new Date();
     if (now >= NEXT) { document.querySelector(".count").textContent = "🎉 It's Thanksgivukkah! 🎉"; return; }
     // whole calendar years first, then the remainder in days/h/m/s
-    let y = NEXT.getFullYear() - now.getFullYear();
-    const shifted = new Date(now); shifted.setFullYear(now.getFullYear() + y);
-    if (shifted > NEXT) { y--; shifted.setFullYear(now.getFullYear() + y); }
+    // Feb 29 in a non-leap target year rolls to Mar 1; setDate(0) pulls it back to Feb 28
+    const addYears = n => { const t = new Date(now); t.setFullYear(now.getFullYear() + n); if (t.getMonth() !== now.getMonth()) t.setDate(0); return t; };
+    let y = NEXT.getFullYear() - now.getFullYear(), shifted = addYears(y);
+    if (shifted > NEXT) shifted = addYears(--y);
     let r = Math.floor((NEXT - shifted) / 1000);
     const d = Math.floor(r / 86400); r %= 86400;
     $("y").textContent = y; $("d").textContent = d;
